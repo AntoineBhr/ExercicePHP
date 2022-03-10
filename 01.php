@@ -68,20 +68,22 @@
         </form>
         <?php 
             $target_dir = "./files/";
+
             if (isset($_FILES['myfile'])) {
                 $target_name = basename($_FILES['myfile']['name']);
+                $extension = substr($target_name, strpos($target_name, ".")); 
                 $new_target_name = $_POST['newFileName'];
-                $target_file = $target_dir . $new_target_name;
+                $target_file = $target_dir . $new_target_name . $extension ;
+                $temp_dir = $_FILES['myfile']['tmp_name'];
     
                 if (isset($_POST['uploadfile'])) {
-                    move_uploaded_file($target_name, $target_file);
+                    move_uploaded_file($temp_dir, $target_file);
                     echo "votre fichier a bien été transféré<br>";
                     echo "<h2>Nom du fichier:</h2> $new_target_name <br>";
     
                 } else {
                     echo "Merci de renseigner les champs.";
                 }
-
             }
            
         ?>
