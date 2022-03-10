@@ -58,5 +58,43 @@
             }
 
         ?>
+        <!-- Exercice 3 -->
+         <h1>Wetransfer LIKE</h1>
+        <form method='post' enctype='multipart/form-data' action=<?php print $_SERVER["PHP_SELF"]; ?>>
+            <label for='myfile'>Chargez votre fichier : </label>
+            <input type="file" name="myfile">
+            <input type='submit' name='uploadfile'>
+        </form>
+        <?php 
+            $target_dir = "./";
+            if (isset($_FILES['myfile'])) {
+                $target_name = basename($_FILES['myfile']['name']);
+                $target_file = $target_dir . $target_name;
+    
+                function changeName($name) {
+                    $target_name = $name;
+                }
+    
+                if (isset($_POST['uploadfile'])) {
+                    echo "votre fichier a bien été transféré<br>";
+                    echo $target_name;
+                    echo "<form method='post'>";
+                    echo "<input type='text' name='rename'>";
+                    echo "<input type='submit'>";
+                    echo "</form>";
+    
+                    if (isset($_POST['rename'])) {
+                        $name = $_POST['rename'];
+                        changeName($name);
+                    }
+    
+    
+                } else {
+                    echo "Merci de renseigner les champs.";
+                }
+
+            }
+           
+        ?>
     </body>
 </html>
