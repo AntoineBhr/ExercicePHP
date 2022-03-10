@@ -63,31 +63,20 @@
         <form method='post' enctype='multipart/form-data' action=<?php print $_SERVER["PHP_SELF"]; ?>>
             <label for='myfile'>Chargez votre fichier : </label>
             <input type="file" name="myfile">
+            <input type="text" name="newFileName">
             <input type='submit' name='uploadfile'>
         </form>
         <?php 
             $target_dir = "./";
             if (isset($_FILES['myfile'])) {
                 $target_name = basename($_FILES['myfile']['name']);
-                $target_file = $target_dir . $target_name;
-    
-                function changeName($name) {
-                    $target_name = $name;
-                }
+                $new_target_name = $_POST['newFileName'];
+                $target_file = $target_dir . $new_target_name;
     
                 if (isset($_POST['uploadfile'])) {
+                    move_uploaded_file($target_name, $target_file);
                     echo "votre fichier a bien été transféré<br>";
-                    echo $target_name;
-                    echo "<form method='post'>";
-                    echo "<input type='text' name='rename'>";
-                    echo "<input type='submit'>";
-                    echo "</form>";
-    
-                    if (isset($_POST['rename'])) {
-                        $name = $_POST['rename'];
-                        changeName($name);
-                    }
-    
+                    echo "<h2>Nom du fichier:</h2> $new_target_name <br>";
     
                 } else {
                     echo "Merci de renseigner les champs.";
