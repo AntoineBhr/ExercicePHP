@@ -67,8 +67,42 @@
             <input type='submit' name='uploadfile'>
         </form>
         <?php 
-            $target_dir = "./";
+            $target_dir = "./files/";
             if (isset($_FILES['myfile'])) {
+                $target_name = basename($_FILES['myfile']['name']);
+                $new_target_name = $_POST['newFileName'];
+                $target_file = $target_dir . $new_target_name;
+    
+                if (isset($_POST['uploadfile'])) {
+                    move_uploaded_file($target_name, $target_file);
+                    echo "votre fichier a bien été transféré<br>";
+                    echo "<h2>Nom du fichier:</h2> $new_target_name <br>";
+    
+                } else {
+                    echo "Merci de renseigner les champs.";
+                }
+
+            }
+           
+        ?>
+        <!-- Exercice 4 -->
+        <h1>Jeu de dés</h1>
+        <p>Sélectionnez le nombre de dés :</p>
+        <form method='post' action=<?php print $_SERVER["PHP_SELF"]; ?>>
+            <select name='dices'>
+                <?php for($x=1; $x < 6; $x++) {
+                    echo "<option value='$x'>$x</option>";
+                    }
+                ?>             
+            </select>
+            <button type="submit" name="value">Jeter le <?php if ($x > 1 ) {echo "s";} ?> dé<?php if ($x > 1 ) {echo "s";} ?> </button>
+        </form>
+        <br>
+        
+        <?php 
+            
+            $value = $_POST['value'];
+            if (isset($_POST['value'])) {
                 $target_name = basename($_FILES['myfile']['name']);
                 $new_target_name = $_POST['newFileName'];
                 $target_file = $target_dir . $new_target_name;
