@@ -95,29 +95,127 @@
                     }
                 ?>             
             </select>
-            <button type="submit" name="value">Jeter le <?php if ($x > 1 ) {echo "s";} ?> dé<?php if ($x > 1 ) {echo "s";} ?> </button>
+            <input type="submit" name="value" value="Roll dice(s)"></input>
         </form>
         <br>
         
         <?php 
-            
-            $value = $_POST['value'];
-            if (isset($_POST['value'])) {
-                $target_name = basename($_FILES['myfile']['name']);
-                $new_target_name = $_POST['newFileName'];
-                $target_file = $target_dir . $new_target_name;
-    
-                if (isset($_POST['uploadfile'])) {
-                    move_uploaded_file($target_name, $target_file);
-                    echo "votre fichier a bien été transféré<br>";
-                    echo "<h2>Nom du fichier:</h2> $new_target_name <br>";
-    
-                } else {
-                    echo "Merci de renseigner les champs.";
+            if (isset($_POST['dices'])) {
+                $nbDices = $_POST['dices'];
+                for($i = 0; $i<$nbDices; $i++){
+                    $face = rand(1, 6);
+                    switch($face){
+                        case 1:
+                            $dice = "<img src='./DE1.png' />";
+                            break;
+                        case 2:
+                            $dice = "<img src='./DE2.png' />";
+                            break;
+                        case 3:
+                            $dice = "<img src='./DE3.png' />";
+                            break;
+                        case 4:
+                            $dice = "<img src='./DE4.png' />";
+                            break;
+                        case 5:
+                            $dice = "<img src='./DE5.png' />";
+                            break;
+                        default:
+                            $dice = "<img src='./DE6.png' />";
+                    }
+                    echo $dice;
+                    echo "&nbsp";
                 }
 
             }
-           
+        ?>
+        <br />
+        <!-- Exercice 5 -->
+        <?php
+            $listequestions = [
+                "Quel organe utilise-t-on pour respirer ?", 
+                "Comment est-ce qu'on dit 'bon après-midi' en anglais ?",
+                "Combien font 9x9 ?",
+                "Comment appelle-t-on une kipa qui prend un avion pour aller à Toronto ?"
+            ];
+            $reponses = [
+                ["L'anus",
+                "Le cubitus",
+                "Les nasaux",
+                "L'auriculaire"],
+                ["Whassup bro ?",
+                "Cheers !",
+                "Happy Birthday",
+                "Good Afternoon !"],
+                ["5854587415",
+                "81",
+                "2",
+                "OH NON DES MATHEMATIQUES !!!"],
+                ["Une kipa volante",
+                "Une kipa surgelée",
+                "Une kipembé",
+                "D, la réponse D."]
+            ];
+
+            $answers = [
+                "Les nasaux",
+                "Good Afternoon !",
+                "81",
+                "D, la réponse D."
+            ];
+            
+            echo "<h1> Qui veut gagner de l'argent en masse ? </h1><br>";
+            echo "Présenté par Jean-Pierre Foucault.<br>";
+            echo "<h2>Question :</h2><br>";
+            $randomQuestionKey = rand(0, count($listequestions)-1);
+            echo "<h3>$listequestions[$randomQuestionKey]</h3><br>";
+            echo "<ul>";
+            echo "<form method='post'>";
+            foreach($reponses[$randomQuestionKey] as $key => $response){
+                if($key % 2 === 0 || $key === 0){
+                    echo "<ul>";
+                    echo "<button style='width:10vw; height:4vh' type='submit' name=$key >$response</button>";
+                }else{
+                    echo "<button style='width:10vw; height:4vh' type='submit' name=$key >$response</button>";
+                    echo "</ul>";
+                }
+            }
+            echo "</form>";
+            if(isset($_POST[0]) || isset($_POST[1]) || isset($_POST[2]) ||isset($_POST[3])){
+                if(isset($_POST[0])){
+                    $chosenAnswer = $reponses[$randomQuestionKey][0];
+                    if(in_array($chosenAnswer, $answers)){
+                        echo "<h1>Bonne réponse !</h1>";
+                        echo "<img src='./DernierMotJP.jpg' />";
+                    }else{
+                        echo "<h1>T'es nul !</h1>";
+                    }
+                }elseif(isset($_POST[1])){
+                    $chosenAnswer = $reponses[$randomQuestionKey][1];
+                    if(in_array($chosenAnswer, $answers)){
+                        echo "<h1>Bonne réponse !</h1>";
+                        echo "<img src='./DernierMotJP.jpg' />";
+                    }else{
+                        echo "<h1>T'es nul !</h1>";
+                    }
+                }elseif(isset($_POST[2])){
+                    $chosenAnswer = $reponses[$randomQuestionKey][2];
+                    if(in_array($chosenAnswer, $answers)){
+                        echo "<h1>Bonne réponse !</h1>";
+                        echo "<img src='./DernierMotJP.jpg' />";
+                    }else{
+                        echo "<h1>T'es nul !</h1>";
+                    }
+                }elseif(isset($_POST[3])){
+                    $chosenAnswer = $reponses[$randomQuestionKey][3];
+                    if(in_array($chosenAnswer, $answers)){
+                        echo "<h1>Bonne réponse !</h1>";
+                        echo "<img src='./DernierMotJP.jpg' />";
+                    }else{
+                        echo "<h1>T'es nul !</h1>";
+                    }
+                }
+            }
         ?>
     </body>
 </html>
